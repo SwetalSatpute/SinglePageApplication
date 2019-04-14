@@ -7,7 +7,7 @@
     <Name>CrudOperations</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{88e58ae2-13a6-45fc-9445-f4864f4e8176}</ProjectGuid>
+    <ProjectGuid>{afb00b68-4d58-4adb-8650-9c152be77607}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
@@ -57,5 +57,16 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="storeprocedure" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Emp_1.sql" />
+    <Build Include="storeprocedure\SpDeleteData.sql" />
+    <Build Include="storeprocedure\SpUpdatee.sql" />
+    <Build Include="storeprocedure\spGetAllEmployees.sql" />
+    <Build Include="storeprocedure\spInsertData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CrudOperations.refactorlog" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file=" EmployeeAccess.cs" company="BridgeLabz">
+//Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace CRUD
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// EmployeeAccess
+    /// </summary>
     public class EmployeeAccess
     {
         string ConnectionString = "Data Source=(localDB)\\local;Initial Catalog=Employe;Integrated Security=true;";
@@ -16,7 +24,7 @@ namespace CRUD
             try
             {
                 List<Model> lstemployee = new List<Model>();
-                using (System.Data.SqlClient.SqlConnection conn = new SqlConnection(ConnectionString))
+                SqlConnection conn = new SqlConnection(ConnectionString);
                 {
                     SqlCommand cmd = new SqlCommand("spGetAllEmploye", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -25,12 +33,9 @@ namespace CRUD
                     while (rdr.Read())
                     {
                         Model employee = new Model();
-
                         employee.EmpId = Convert.ToInt32(rdr["EmpId"]);
                         employee.EmpName = rdr["EmpName"].ToString();
                         employee.EmpSalary = Convert.ToDouble(rdr["EmpSalary"].ToString());
-
-
                         lstemployee.Add(employee);
                     }
                     conn.Close();
@@ -49,11 +54,9 @@ namespace CRUD
             {
                 SqlCommand cmd = new SqlCommand("spInsertData", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.AddWithValue("@EmpId", employee.EmpId);
                 cmd.Parameters.AddWithValue("@EmpName", employee.EmpName);
                 cmd.Parameters.AddWithValue("@EmpSalary", employee.EmpSalary);
-    
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -63,32 +66,23 @@ namespace CRUD
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
-                //SqlCommand cmd = new SqlCommand("update Emp set @EmpName=EmpName, @EmpSalary=EmpSalary where @EmpId=EmpId", con);
-
                 SqlCommand cmd = new SqlCommand("SpUpdate", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
-
+                cmd.Parameters.AddWithValue("@EmpId",employee.EmpId);
                 cmd.Parameters.AddWithValue("@EmpName", employee.EmpName);
                 cmd.Parameters.AddWithValue("@EmpSalary", employee.EmpSalary);
-               
-
                 con.Open();
-                cmd.ExecuteNonQuery();
-                
+                cmd.ExecuteNonQuery();  
                 con.Close(); 
             }
         }
         public void DeleteEmployee(int id)
         {
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand("SpDeleteData", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 cmd.Parameters.AddWithValue("@EmpId", id);
-
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -102,10 +96,8 @@ namespace CRUD
             {
                 string sqlQuery = "SELECT * FROM Employe WHERE EmpId= " + id;
                 SqlCommand cmd = new SqlCommand(sqlQuery, con);
-
                 con.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
-
                 while (rdr.Read())
                 {
                     employee.EmpId = Convert.ToInt32(rdr["EmpID"]);

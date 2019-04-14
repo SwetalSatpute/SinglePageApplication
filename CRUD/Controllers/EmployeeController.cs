@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file=" EmployeeController.cs" company="BridgeLabz">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace CRUD.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-
         EmployeeAccess objEmployee = new EmployeeAccess();
 
-
+        /// <summary>
+        /// Indexes this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        
+        [Route("view")]
         public IEnumerable<Model> Index()
         {
             try
@@ -30,7 +37,11 @@ namespace CRUD.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Deletes the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("delete/{id}")]
         public bool Delete(int id)
@@ -47,26 +58,33 @@ namespace CRUD.Controllers
             }
         }
 
-
-
+        /// <summary>
+        /// Updates the specified employee.
+        /// </summary>
+        /// <param name="employee">The employee.</param>
+        /// <returns></returns>
         [HttpPut]
-        [Route("Update/")]
+        [Route("Update")]
         public bool Update(  [Bind]Model employee)
-
-
         {
             try
             {
                 objEmployee.UpdateEmployee( employee);
                 return true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;
             }
 
         }
+
+        /// <summary>
+        /// Adds the specified employee.
+        /// </summary>
+        /// <param name="employee">The employee.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Add")]
         public bool Add([Bind]Model employee)
@@ -75,6 +93,11 @@ namespace CRUD.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Detailses the specified identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Details/{id}")]
         public bool Details(int? id)
